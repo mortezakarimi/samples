@@ -129,6 +129,37 @@ try {
   log('Warning! The "seekto" media session action is not supported.');
 }
 
+/* Picture-in-Picture Canvas */
+
+const canvas = document.createElement('canvas');
+canvas.width = canvas.height = 512;
+
+const video = document.createElement('video');
+video.srcObject = canvas.captureStream();
+video.muted = true;
+
+async function showPictureInPictureWindow() {
+  const image = new Image();
+  image.crossOrigin = true;
+  image.src = [...navigator.mediaSession.metadata.artwork].pop().src;
+  await image.decode();
+
+  canvas.getContext('2d').drawImage(image, 0, 0, 512, 512);
+  await video.play();
+  await video.requestPictureInPicture();
+}
+
+/* Enter Picture-in-Picture automatically (supported since Chrome 132) */
+
+try {
+  navigator.mediaSession.setActionHandler('enterpictureinpicture', function() {
+    log('> Automatically enter picture-in-picture.');
+    showPictureInPictureWindow();
+  });
+} catch(error) {
+  log('Warning! The "enterpictureinpicture" media session action is not supported.');
+}
+
 /* Utils */
 
 function getAwesomePlaylist() {
