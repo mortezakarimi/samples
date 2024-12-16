@@ -139,7 +139,8 @@ video.srcObject = canvas.captureStream();
 video.muted = true;
 
 async function showPictureInPictureWindow() {
-  const response = await fetch([...navigator.mediaSession.metadata.artwork].pop().src);
+  const artworkSrc = [...navigator.mediaSession.metadata.artwork].pop().src;
+  const response = await fetch(artworkSrc);
   const blob = await response.blob();
   const image = await createImageBitmap(blob);
 
