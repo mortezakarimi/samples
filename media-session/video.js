@@ -134,7 +134,7 @@ try {
 
 try {
   navigator.mediaSession.setActionHandler('enterpictureinpicture', async function() {
-    log('> User clicked "Enter Picture-in-Picture" icon.');
+    log('> User clicked "Enter Picture-in-Picture" icon or we are eligible to automatically enter picture-in-picture.');
     await video.requestPictureInPicture();
   });
 } catch(error) {
