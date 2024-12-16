@@ -139,10 +139,9 @@ video.srcObject = canvas.captureStream();
 video.muted = true;
 
 async function showPictureInPictureWindow() {
-  const image = new Image();
-  image.crossOrigin = true;
-  image.src = [...navigator.mediaSession.metadata.artwork].pop().src;
-  await image.decode();
+  const response = await fetch([...navigator.mediaSession.metadata.artwork].pop().src);
+  const blob = await response.blob();
+  const image = await createImageBitmap(blob);
 
   canvas.getContext('2d').drawImage(image, 0, 0, 512, 512);
   await video.play();
