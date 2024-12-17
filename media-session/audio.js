@@ -149,7 +149,7 @@ async function showPictureInPictureWindow() {
   await video.requestPictureInPicture();
 }
 
-/* Enter Picture-in-Picture automatically (supported since Chrome 132) */
+/* Enter Picture-in-Picture automatically (supported since Chrome 133) */
 
 try {
   navigator.mediaSession.setActionHandler('enterpictureinpicture', function() {
